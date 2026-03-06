@@ -63,10 +63,10 @@
                             <option value="lunch">☀️ 午餐</option>
                             <option value="dinner">🌙 晚餐</option>
                             <option value="snack">🌃 夜宵</option>
-                            <option value="laundry">� 洗衣</option>
+                            <option value="laundry">👕 洗衣</option>
                             <option value="drink">🧃 小饮料</option>
                             <option value="transport">🚌 交通</option>
-                            <option value="shopping">� 购物</option>
+                            <option value="shopping">🛒 购物</option>
                             <option value="social">🤝 人情</option>
                             <option value="socks" selected>🧦 袜子</option>
                             <option value="other">📦 其他</option>
@@ -93,13 +93,15 @@
 
                 <!-- 提交 -->
                 <button class="btn-submit" id="btn-submit">提交</button>
+
+                <!-- 提交成功提示 -->
+                <div class="toast" id="toast">✅ 已记录</div>
             </div>
         </main>
 
         <!-- ===== 历史账目页 ===== -->
         <section class="page page-history" id="page-history">
             <div class="page-inner">
-                <!-- 月份选择 + 月度汇总 -->
                 <div class="history-header">
                     <div class="month-selector">
                         <button class="month-arrow" id="month-prev">‹</button>
@@ -107,140 +109,12 @@
                         <button class="month-arrow" id="month-next">›</button>
                     </div>
                     <div class="month-total">
-                        本月支出 <strong>¥ 3,280.50</strong>
+                        本月支出 <strong id="month-total-amount">¥ 0.00</strong>
                     </div>
                 </div>
-
-                <!-- 账目列表 -->
+                <!-- 动态渲染 -->
                 <div class="record-list" id="record-list">
-                    <div class="date-group">
-                        <div class="date-header">
-                            <span class="date-label">3月6日 周四</span>
-                            <span class="date-total">-¥141.00</span>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">🍔
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">餐饮</div>
-                                <div class="record-note">午饭 - 牛肉面</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥35.00</div>
-                                <div class="record-time">12:30</div>
-                            </div>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #54a0ff, #2e86de);">🚌
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">交通</div>
-                                <div class="record-note">地铁</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥6.00</div>
-                                <div class="record-time">08:15</div>
-                            </div>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #ffa502, #e67e22);">🛒
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">购物</div>
-                                <div class="record-note">超市日用品</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥89.00</div>
-                                <div class="record-time">19:42</div>
-                            </div>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7);">🎬
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">娱乐</div>
-                                <div class="record-note">电影票</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥11.00</div>
-                                <div class="record-time">20:00</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="date-group">
-                        <div class="date-header">
-                            <span class="date-label">3月5日 周三</span>
-                            <span class="date-total">-¥258.00</span>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">🍔
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">餐饮</div>
-                                <div class="record-note">晚餐 - 火锅</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥158.00</div>
-                                <div class="record-time">18:30</div>
-                            </div>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #00d2d3, #01a3a4);">💊
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">医疗</div>
-                                <div class="record-note">感冒药</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥48.00</div>
-                                <div class="record-time">14:20</div>
-                            </div>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #54a0ff, #2e86de);">🚌
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">交通</div>
-                                <div class="record-note">打车回家</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥52.00</div>
-                                <div class="record-time">22:10</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="date-group">
-                        <div class="date-header">
-                            <span class="date-label">3月4日 周二</span>
-                            <span class="date-total">-¥76.00</span>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">🍔
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">餐饮</div>
-                                <div class="record-note">午饭</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥28.00</div>
-                                <div class="record-time">12:00</div>
-                            </div>
-                        </div>
-                        <div class="record-item">
-                            <div class="record-icon" style="background: linear-gradient(135deg, #2ed573, #26ae60);">📚
-                            </div>
-                            <div class="record-info">
-                                <div class="record-category">学习</div>
-                                <div class="record-note">技术书籍</div>
-                            </div>
-                            <div class="record-right">
-                                <div class="record-amount">-¥48.00</div>
-                                <div class="record-time">15:30</div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="empty-state" id="empty-history">📭 这个月还没有账目，去记一笔吧</div>
                 </div>
             </div>
         </section>
@@ -249,12 +123,11 @@
         <section class="page page-stats" id="page-stats">
             <div class="page-inner">
                 <div class="month-selector" style="margin-bottom: 20px;">
-                    <button class="month-arrow">‹</button>
-                    <span class="month-label">2026年3月</span>
-                    <button class="month-arrow">›</button>
+                    <button class="month-arrow" id="stats-month-prev">‹</button>
+                    <span class="month-label" id="stats-month-label">2026年3月</span>
+                    <button class="month-arrow" id="stats-month-next">›</button>
                 </div>
 
-                <!-- Tab 切换 -->
                 <div class="stats-tabs">
                     <button class="stats-tab active" data-tab="category">按类别</button>
                     <button class="stats-tab" data-tab="daily">按天</button>
@@ -264,86 +137,13 @@
                 <div class="stats-panel active" id="stats-category">
                     <div class="stats-total">
                         <span class="stats-total-label">本月总支出</span>
-                        <span class="stats-total-amount">¥ 3,280.50</span>
+                        <span class="stats-total-amount" id="stats-total-category">¥ 0.00</span>
                     </div>
-
-                    <div class="pie-chart">
-                        <div class="pie-center"><span>8 类</span></div>
+                    <div class="pie-chart" id="pie-chart">
+                        <div class="pie-center">无数据</div>
                     </div>
-
-                    <div class="category-list">
-                        <div class="cat-row">
-                            <span class="cat-icon">🍔</span>
-                            <span class="cat-name">餐饮</span>
-                            <div class="cat-bar">
-                                <div class="cat-bar-fill" style="width:37%; background:#ff6b6b;"></div>
-                            </div>
-                            <span class="cat-amount">¥1,213</span>
-                            <span class="cat-pct">37%</span>
-                        </div>
-                        <div class="cat-row">
-                            <span class="cat-icon">🚌</span>
-                            <span class="cat-name">交通</span>
-                            <div class="cat-bar">
-                                <div class="cat-bar-fill" style="width:18%; background:#54a0ff;"></div>
-                            </div>
-                            <span class="cat-amount">¥590</span>
-                            <span class="cat-pct">18%</span>
-                        </div>
-                        <div class="cat-row">
-                            <span class="cat-icon">🛒</span>
-                            <span class="cat-name">购物</span>
-                            <div class="cat-bar">
-                                <div class="cat-bar-fill" style="width:15%; background:#ffa502;"></div>
-                            </div>
-                            <span class="cat-amount">¥492</span>
-                            <span class="cat-pct">15%</span>
-                        </div>
-                        <div class="cat-row">
-                            <span class="cat-icon">🏠</span>
-                            <span class="cat-name">住房</span>
-                            <div class="cat-bar">
-                                <div class="cat-bar-fill" style="width:12%; background:#2ed573;"></div>
-                            </div>
-                            <span class="cat-amount">¥393</span>
-                            <span class="cat-pct">12%</span>
-                        </div>
-                        <div class="cat-row">
-                            <span class="cat-icon">🎬</span>
-                            <span class="cat-name">娱乐</span>
-                            <div class="cat-bar">
-                                <div class="cat-bar-fill" style="width:8%; background:#a29bfe;"></div>
-                            </div>
-                            <span class="cat-amount">¥262</span>
-                            <span class="cat-pct">8%</span>
-                        </div>
-                        <div class="cat-row">
-                            <span class="cat-icon">💊</span>
-                            <span class="cat-name">医疗</span>
-                            <div class="cat-bar">
-                                <div class="cat-bar-fill" style="width:5%; background:#00d2d3;"></div>
-                            </div>
-                            <span class="cat-amount">¥164</span>
-                            <span class="cat-pct">5%</span>
-                        </div>
-                        <div class="cat-row">
-                            <span class="cat-icon">📚</span>
-                            <span class="cat-name">学习</span>
-                            <div class="cat-bar">
-                                <div class="cat-bar-fill" style="width:3%; background:#ffeaa7;"></div>
-                            </div>
-                            <span class="cat-amount">¥98</span>
-                            <span class="cat-pct">3%</span>
-                        </div>
-                        <div class="cat-row">
-                            <span class="cat-icon">📦</span>
-                            <span class="cat-name">其他</span>
-                            <div class="cat-bar">
-                                <div class="cat-bar-fill" style="width:2%; background:#636e72;"></div>
-                            </div>
-                            <span class="cat-amount">¥65</span>
-                            <span class="cat-pct">2%</span>
-                        </div>
+                    <div class="category-list" id="category-stats-list">
+                        <div class="empty-state">📭 暂无数据</div>
                     </div>
                 </div>
 
@@ -351,43 +151,10 @@
                 <div class="stats-panel" id="stats-daily">
                     <div class="stats-total">
                         <span class="stats-total-label">本月总支出</span>
-                        <span class="stats-total-amount">¥ 3,280.50</span>
+                        <span class="stats-total-amount" id="stats-total-daily">¥ 0.00</span>
                     </div>
-
-                    <div class="bar-chart">
-                        <div class="bar-col">
-                            <div class="bar-fill" style="height:45%"></div><span>1日</span>
-                        </div>
-                        <div class="bar-col">
-                            <div class="bar-fill" style="height:72%"></div><span>2日</span>
-                        </div>
-                        <div class="bar-col">
-                            <div class="bar-fill" style="height:30%"></div><span>3日</span>
-                        </div>
-                        <div class="bar-col">
-                            <div class="bar-fill" style="height:55%"></div><span>4日</span>
-                        </div>
-                        <div class="bar-col">
-                            <div class="bar-fill" style="height:88%"></div><span>5日</span>
-                        </div>
-                        <div class="bar-col today">
-                            <div class="bar-fill" style="height:60%"></div><span>6日</span>
-                        </div>
-                    </div>
-
-                    <div class="daily-list">
-                        <div class="daily-row"><span class="daily-date">3月6日</span><span class="daily-count">4
-                                笔</span><span class="daily-amount">-¥141.00</span></div>
-                        <div class="daily-row"><span class="daily-date">3月5日</span><span class="daily-count">3
-                                笔</span><span class="daily-amount">-¥258.00</span></div>
-                        <div class="daily-row"><span class="daily-date">3月4日</span><span class="daily-count">2
-                                笔</span><span class="daily-amount">-¥76.00</span></div>
-                        <div class="daily-row"><span class="daily-date">3月3日</span><span class="daily-count">5
-                                笔</span><span class="daily-amount">-¥320.50</span></div>
-                        <div class="daily-row"><span class="daily-date">3月2日</span><span class="daily-count">3
-                                笔</span><span class="daily-amount">-¥198.00</span></div>
-                        <div class="daily-row"><span class="daily-date">3月1日</span><span class="daily-count">6
-                                笔</span><span class="daily-amount">-¥412.00</span></div>
+                    <div class="daily-list" id="daily-stats-list">
+                        <div class="empty-state">📭 暂无数据</div>
                     </div>
                 </div>
             </div>
@@ -398,8 +165,10 @@
             <div class="page-inner">
                 <div class="settings-group">
                     <h3 class="settings-title">数据管理</h3>
-                    <div class="settings-item"><span>📤</span><span>导出数据 (CSV)</span><span class="arrow">›</span></div>
-                    <div class="settings-item"><span>🗑️</span><span>清空所有数据</span><span class="arrow">›</span></div>
+                    <div class="settings-item" id="btn-export"><span>📤</span><span>导出数据 (CSV)</span><span
+                            class="arrow">›</span></div>
+                    <div class="settings-item" id="btn-clear-data"><span>🗑️</span><span>清空所有数据</span><span
+                            class="arrow">›</span></div>
                 </div>
                 <div class="settings-group">
                     <h3 class="settings-title">关于</h3>
@@ -407,6 +176,8 @@
                     </div>
                     <div class="settings-item"><span>💾</span><span>存储方式</span><span class="settings-val">浏览器本地存储</span>
                     </div>
+                    <div class="settings-item"><span>📊</span><span>已记录</span><span class="settings-val"
+                            id="record-count">0 条</span></div>
                 </div>
             </div>
         </section>
