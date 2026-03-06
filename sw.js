@@ -1,5 +1,5 @@
-// Service Worker — 离线缓存
-const CACHE_NAME = 'zhangben-v1';
+// Service Worker — 离线缓存（缓存优先策略）
+const CACHE_NAME = 'zhangben-v2';
 const ASSETS = [
     './',
     './index.html',
@@ -11,7 +11,7 @@ const ASSETS = [
     './icon-180.png',
 ];
 
-// 安装 → 缓存所有资源
+// 安装 → 缓存所有核心资源
 self.addEventListener('install', e => {
     e.waitUntil(
         caches.open(CACHE_NAME)
@@ -20,7 +20,7 @@ self.addEventListener('install', e => {
     );
 });
 
-// 激活 → 清理旧缓存
+// 激活 → 清理旧版本缓存，立即接管页面
 self.addEventListener('activate', e => {
     e.waitUntil(
         caches.keys().then(keys =>
@@ -29,22 +29,39 @@ self.addEventListener('activate', e => {
     );
 });
 
-// 拦截请求 → 优先缓存，回退到网络
+// 拦截请求 → 缓存优先，秒开
 self.addEventListener('fetch', e => {
-    // 只处理同源 GET 请求
     if (e.request.method !== 'GET') return;
 
     e.respondWith(
         caches.match(e.request).then(cached => {
-            if (cached) return cached;
-            return fetch(e.request).then(response => {
-                // 不缓存 Google Fonts 等外部资源的错误响应
-                if (!response || response.status !== 200) return response;
-                const clone = response.clone();
-                caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+            // 1. 有缓存 → 立即返回（同时后台更新缓存）
+            if (cached) {
+                // 后台静默更新：不阻塞页面加载
+                e.waitUntil(
+                    fetch(e.request).then(response => {
+                        if (response && response.status === 200) {
+                            caches.open(CACHE_NAME).then(cache => cache.put(e.request, response));
+                        }
+                    }).catch(() => {/* 离线就跳过更新 */ })
+                );
+                return cached;
+            }
+
+            // 2. 无缓存 → 网络请求（带 3 秒超时）
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+            return fetch(e.request, { signal: controller.signal }).then(response => {
+                clearTimeout(timeoutId);
+                if (response && response.status === 200) {
+                    const clone = response.clone();
+                    caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+                }
                 return response;
             }).catch(() => {
-                // 离线且无缓存 → 返回 fallback
+                clearTimeout(timeoutId);
+                // 离线且无缓存 → 返回主页面
                 if (e.request.destination === 'document') {
                     return caches.match('./index.html');
                 }
