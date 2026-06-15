@@ -8,6 +8,7 @@ const CATEGORIES = {
     lunch: { name: '午餐', icon: '☀️', color: '#ffa502' },
     dinner: { name: '晚餐', icon: '🌙', color: '#a29bfe' },
     snack: { name: '夜宵', icon: '🌃', color: '#e17055' },
+    ai: { name: 'AI', icon: '🤖', color: '#8e44ad' },
     laundry: { name: '洗衣', icon: '👕', color: '#00d2d3' },
     drink: { name: '小饮料', icon: '🧃', color: '#55efc4' },
     transport: { name: '交通', icon: '🚌', color: '#54a0ff' },
@@ -117,8 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSubmit = document.getElementById('btn-submit');
     const toast = document.getElementById('toast');
 
-    // 自动填当前日期
-    const now = new Date();
+    // 自动填当前日期（凌晨3点前算作昨天）
+    let now = new Date();
+    if (now.getHours() < 3) {
+        now = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    }
     inputTime.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 
     // 默认袜子 → 金额 0.01
@@ -150,11 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // 显示成功提示
         showToast();
 
-        // 重置表单
-        const today = new Date();
-        inputTime.value = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
-        inputCategory.value = 'socks';
-        inputAmount.value = '0.01';
+        // 重置表单（保持日期和类别，金额根据类别重置）
+        if (inputCategory.value === 'socks') {
+            inputAmount.value = '0.01';
+        } else {
+            inputAmount.value = '';
+        }
         inputNote.value = '';
     });
 
