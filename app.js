@@ -455,6 +455,87 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 导入 CSV 数据
+    const inputImport = document.getElementById('input-import');
+    if (inputImport) {
+        inputImport.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const text = evt.target.result.replace(/^\uFEFF/, '');
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+                if (lines.length <= 1) {
+                    alert('导入失败：文件为空或格式错误');
+                    return;
+                }
+
+                // 查找类别反向映射（从中文名找 key）
+                const nameToKey = {};
+                for (const key in CATEGORIES) {
+                    nameToKey[CATEGORIES[key].name] = key;
+                }
+
+                let importedCount = 0;
+                const records = loadRecords();
+
+                // 跳过第一行表头
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i];
+                    const parts = line.split(',');
+                    if (parts.length >= 4) {
+                        const date = parts[0].trim();
+                        const catName = parts[1].trim();
+                        const amount = parseFloat(parts[2].trim());
+                        let note = parts.slice(3).join(',').trim();
+                        
+                        if (note.startsWith('"') && note.endsWith('"')) {
+                            note = note.substring(1, note.length - 1).replace(/""/g, '"');
+                        }
+
+                        if (date && catName && !isNaN(amount)) {
+                            const category = nameToKey[catName] || 'other';
+                            
+                            // 简单去重：同日期、同类别、同金额、同备注，视为已存在
+                            const isDuplicate = records.some(r => 
+                                r.date === date && 
+                                r.category === category && 
+                                r.amount === amount && 
+                                (r.note || '') === note
+                            );
+
+                            if (!isDuplicate) {
+                                records.push({
+                                    id: Date.now().toString() + Math.random().toString(36).substring(2, 9),
+                                    date: date,
+                                    category: category,
+                                    amount: amount,
+                                    note: note
+                                });
+                                importedCount++;
+                            }
+                        }
+                    }
+                }
+
+                if (importedCount > 0) {
+                    saveRecords(records);
+                    renderHistory();
+                    renderStats();
+                    updateRecordCount();
+                    alert(`成功导入 ${importedCount} 条新记录！`);
+                } else {
+                    alert('没有找到新记录，或记录都已存在。');
+                }
+                
+                // 清空 input 保证下次选取同一文件也能触发
+                inputImport.value = '';
+            };
+            reader.readAsText(file);
+        });
+    }
+
     // ---------- 初始化 ----------
     updateHistoryMonth();
     updateStatsMonth();

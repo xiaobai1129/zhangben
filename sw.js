@@ -1,5 +1,5 @@
 // Service Worker — 离线缓存（缓存优先策略）
-const CACHE_NAME = 'zhangben-v3';
+const CACHE_NAME = 'zhangben-v4';
 const ASSETS = [
     './',
     './index.html',
